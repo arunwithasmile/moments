@@ -21,5 +21,4 @@ export const TagList: Tag[] = [
 export class TaggedImages {
     tagImageId: number;
     tagName: string;
-    imageURL: string;
 }

@@ -4,6 +4,7 @@ html,
 body {
     height: 100%;
     background-color: #eee;
+    color: #333;
 }
 
 body {
@@ -14,4 +15,8 @@ body {
 main {
     max-width: 1000px;
     margin: auto;
+}
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+    overflow: auto;
 }

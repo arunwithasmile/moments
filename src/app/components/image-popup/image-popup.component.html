@@ -1,23 +1,19 @@
 <div>
     <img [src]="imageUrl" alt="Image" class="image">
     <div style="margin: 10px;">
-        <div style="font-size: 18px;">Tags</div>
+        <div *ngIf="savedTags.length > 0" style="font-size: 18px;">Tags</div>
         <div class="tags">
-            <div *ngFor="let tagedItem of tagedPeople; let i=index">
-                <div class="tagList">
-                    <div>
-                        {{tagedItem}}
-                    </div>
-                    <button mat-icon-button (click)="removeTag(i)">
-                        <mat-icon color="warn">delete</mat-icon>
-                    </button>
-                </div>
-            </div>
+            <mat-chip-row *ngFor="let taggedItem of savedTags; let i=index" (removed)="removeTag(i)">
+                {{taggedItem.tagName}}
+                <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
         </div>
 
-        <mat-form-field class="width">
-            <input matInput placeholder="Search Name" aria-label="Country" [(ngModel)]="searchQuery"
-                [matAutocomplete]="auto" required (input)="search()" />
+        <mat-form-field appearance="outline" class="search-bar">
+            <input matInput placeholder="Search and tag people" [(ngModel)]="searchQuery" [matAutocomplete]="auto"
+                (input)="search()" />
             <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let item of searchResults " [value]="item.name" (click)="addTag(item)">
                     <span>{{ item.name }}</span>
@@ -26,7 +22,7 @@
             </mat-autocomplete>
         </mat-form-field>
     </div>
-    <mat-dialog-actions align="end">
+    <mat-dialog-actions align="end" class="dialog-actions">
         <button mat-raised-button color="primary" (click)="closeDialog()">Close</button>
     </mat-dialog-actions>
 </div>

@@ -5,14 +5,18 @@
 
 .tags {
     padding-block: 10px;
-}
-
-.tagList {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 5px;
 }
 
 .mat-icon-button {
     font-size: 18px;
+}
+
+.search-bar {
+    margin-block: 15px;
+}
+
+.dialog-actions {
+    padding: 16px;
 }

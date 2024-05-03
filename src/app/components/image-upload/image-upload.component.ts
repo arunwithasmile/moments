@@ -3,7 +3,6 @@ import { NgIf, NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ImagePopupComponent } from '../image-popup/image-popup.component';
-import { MatDialogRef } from '@angular/material/dialog';
 import { imageData } from '../../models/image/image.model';
 import { UploadService } from '../../services/upload/upload.service';
 
@@ -41,14 +40,14 @@ export class ImageUploadComponent {
 
     if (this.files && this.files.length) {
       this.files.forEach((file: File) => {
-        this.readFile(file);
+        this.readAndSaveFile(file);
       });
       this.loading = !this.loading;
 
     }
   }
 
-  readFile(file: File) {
+  readAndSaveFile(file: File) {
     const reader = new FileReader();
     reader.onload = (e) => {
       const imageData = reader.result as string;
@@ -65,7 +64,7 @@ export class ImageUploadComponent {
   saveToLocalStorage(imageURL: string) {
     const existingData = JSON.parse(localStorage.getItem('imageData') || '[]');
     const imageData = { imageId: existingData.length, imageURL: imageURL }
-    this.upload.saveToLocalStorage("imageData", imageData);
+    this.upload.appendToLocalStorage("imageData", imageData);
   }
 
   refreshImages() {
@@ -77,7 +76,7 @@ export class ImageUploadComponent {
     this.dialog.open(ImagePopupComponent, {
       data: { imageId: imageId, imageUrl: imagePath },
       width: '50%',
-      height: '60%',
+      maxHeight: '80%',
     });
   }
 }
