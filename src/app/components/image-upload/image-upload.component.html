@@ -1,0 +1,24 @@
+<div class="upload-image">
+    <input matInput type="file" multiple (change)="onChange($event)" />
+    <button mat-raised-button color="primary"
+        [disabled]="this.imgUploadCount > imgUploadLimit || this.imgUploadCount == 0" (click)="onUpload()">
+        Upload
+    </button>
+</div>
+<span style="color: red;" *ngIf="this.imgUploadCount > imgUploadLimit">
+    You can choose up to {{imgUploadLimit}} images only
+</span>
+
+
+<div class="container" *ngIf="loading">
+    <h3>Loading ...</h3>
+</div>
+
+<div class="image-title ">
+    Images
+</div>
+<div class="image-list">
+    <div *ngFor="let imageData of imageDataArray" class="image">
+        <img [src]="imageData.imageURL" alt="Image" (click)="openImagePopup(imageData.imageId ,imageData.imageURL)">
+    </div>
+</div>

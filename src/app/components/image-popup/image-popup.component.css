@@ -1,0 +1,18 @@
+.image {
+    width: 100%;
+    height: auto;
+}
+
+.tags {
+    padding-block: 10px;
+}
+
+.tagList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mat-icon-button {
+    font-size: 18px;
+}

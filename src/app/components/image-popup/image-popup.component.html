@@ -1,0 +1,32 @@
+<div>
+    <img [src]="imageUrl" alt="Image" class="image">
+    <div style="margin: 10px;">
+        <div style="font-size: 18px;">Tags</div>
+        <div class="tags">
+            <div *ngFor="let tagedItem of tagedPeople; let i=index">
+                <div class="tagList">
+                    <div>
+                        {{tagedItem}}
+                    </div>
+                    <button mat-icon-button (click)="removeTag(i)">
+                        <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <mat-form-field class="width">
+            <input matInput placeholder="Search Name" aria-label="Country" [(ngModel)]="searchQuery"
+                [matAutocomplete]="auto" required (input)="search()" />
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let item of searchResults " [value]="item.name" (click)="addTag(item)">
+                    <span>{{ item.name }}</span>
+                </mat-option>
+                <mat-option *ngIf="searchResultLength === 0">No data found</mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="primary" (click)="closeDialog()">Close</button>
+    </mat-dialog-actions>
+</div>

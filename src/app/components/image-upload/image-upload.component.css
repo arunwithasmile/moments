@@ -1,0 +1,27 @@
+.upload-image {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.image-title {
+    padding: 10px 0;
+}
+
+.image-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image {
+    width: 20%;
+    height: auto;
+    aspect-ratio: 1;
+    overflow: hidden;
+
+    img {
+        width: calc(100% - 5px);
+        object-fit: cover;
+        height: calc(100% - 5px);
+    }
+}
