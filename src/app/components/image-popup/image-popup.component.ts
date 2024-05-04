@@ -62,7 +62,7 @@ export class ImagePopupComponent {
   }
 
   getExistingData() {
-    this.savedTags = JSON.parse(localStorage.getItem("tags" || '[]')).filter(t => t.tagImageId === this.data.imageId)
+    this.savedTags = JSON.parse(localStorage.getItem("tags") || '[]').filter(t => t.tagImageId === this.data.imageId)
   }
 
   closeDialog(): void {

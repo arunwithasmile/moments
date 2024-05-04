@@ -11,4 +11,5 @@ import { ImageUploadComponent } from "./components/image-upload/image-upload.com
 })
 export class AppComponent {
   title = 'Moments';
+  tagline = 'Capture Life, Treasure Memories';
 }

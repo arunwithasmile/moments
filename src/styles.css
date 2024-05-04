@@ -2,19 +2,21 @@
 
 html,
 body {
-    height: 100%;
-    background-color: #eee;
-    color: #333;
-}
-
-body {
-    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    min-height: 100%;
+    background-color: #eee;
+    color: #253a59;
 }
 
 main {
     max-width: 1000px;
     margin: auto;
+}
+
+.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .cdk-overlay-pane.mat-mdc-dialog-panel {

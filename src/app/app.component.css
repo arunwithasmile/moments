@@ -1,5 +1,13 @@
+.header {
+    margin-block: 15px;
+    text-align: center;
+    padding-block: 8px;
+    background-color: white;
+    border-radius: 6px;
+}
+
 .title {
-    padding-block: 10px;
-    font-size: 18px;
+    padding-block: 8px;
+    font-size: 28px;
     font-weight: 600;
 }
