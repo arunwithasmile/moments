@@ -1,14 +1,9 @@
-export class imageData {
-    imageId: number;
-    imageURL: string;
-}
-
 export class Tag {
     id: number;
     name: string;
 }
 
-export const TagList: Tag[] = [
+export const availableTagList: Tag[] = [
     { id: 1, name: 'Akshata' },
     { id: 2, name: 'Alanka' },
     { id: 3, name: 'Arun' },
@@ -18,7 +13,8 @@ export const TagList: Tag[] = [
 
 ];
 
-export class TaggedImages {
-    tagImageId: number;
-    tagName: string;
+export class ImageData {
+    imageId: number;
+    dataURL: string;
+    tags: Tag[];
 }

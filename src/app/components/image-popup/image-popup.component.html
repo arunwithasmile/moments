@@ -2,12 +2,12 @@
     <div style="height: 0;">
         <button></button>
     </div>
-    <img [src]="imageUrl" alt="Image" class="image">
+    <img [src]="imageData.dataURL" alt="Image" class="image">
     <div style="margin: 10px;">
-        <div *ngIf="savedTags.length > 0" style="font-size: 18px;">Tags</div>
+        <div *ngIf="imageData.tags.length > 0" style="font-size: 18px;">Tags</div>
         <div class="tags">
-            <mat-chip-row *ngFor="let taggedItem of savedTags; let i=index" (removed)="removeTag(i)">
-                {{taggedItem.tagName}}
+            <mat-chip-row *ngFor="let taggedItem of imageData.tags; let i=index" (removed)="removeTag(i)">
+                {{taggedItem.name}}
                 <button matChipRemove>
                     <mat-icon>cancel</mat-icon>
                 </button>
@@ -26,6 +26,7 @@
         </mat-form-field>
     </div>
     <mat-dialog-actions align="end" class="dialog-actions">
-        <button mat-raised-button color="primary" (click)="closeDialog()">Close</button>
+        <button mat-button (click)="closeDialog()">Close</button>
+        <button mat-raised-button color="primary" (click)="upload()">Upload</button>
     </mat-dialog-actions>
 </div>

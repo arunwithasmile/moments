@@ -7,9 +7,12 @@ export class UploadService {
 
   constructor() { }
 
-  appendToLocalStorage(localStorageName: string, data) {
-    const existingData = JSON.parse(localStorage.getItem(localStorageName) || '[]');
-    existingData.push(data);
-    localStorage.setItem(localStorageName, JSON.stringify(existingData));
+  saveImagesToLocalStorage(data) {
+    localStorage.setItem("imageData", JSON.stringify(data));
+  }
+
+  getImagesFromLocalStorage() {
+    const existingData = JSON.parse(localStorage.getItem("imageData") || '[]');
+    return existingData;
   }
 }

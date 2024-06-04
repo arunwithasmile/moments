@@ -4,16 +4,12 @@
             <mat-icon>add_a_photo</mat-icon>
             <span>Add Images</span>
         </label>
-        <input id="file-input" class="file-input" matInput type="file" accept="image/*" multiple
+        <input id="file-input" class="file-input" matInput type="file" accept="image/*"
             (change)="onChange($event)" />
         <div class="file-names" *ngIf="imgUploadCount > 0">
             <span class="names ellipsis">{{fileNames}}</span>
             <span class="count" *ngIf="imgUploadCount > 1">({{imgUploadCount}} images)</span>
         </div>
-        <button mat-raised-button color="primary" [hidden]="imgUploadCount > imgUploadLimit || imgUploadCount == 0"
-            (click)="onUpload()">
-            Upload
-        </button>
     </div>
     <div class="error-section" *ngIf="imgUploadCount > imgUploadLimit">
         You can choose up to {{imgUploadLimit}} images only
@@ -28,6 +24,6 @@
 
 <div class="image-list">
     <div *ngFor="let imageData of imageDataArray" class="image">
-        <img [src]="imageData.imageURL" alt="Image" (click)="openImagePopup(imageData.imageId ,imageData.imageURL)">
+        <img [src]="imageData.dataURL" alt="Image" (click)="openImagePopup(imageData.imageId)">
     </div>
 </div>

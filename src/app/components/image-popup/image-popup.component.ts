@@ -11,17 +11,19 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatChipsModule } from '@angular/material/chips';
 import { NgIf, NgFor } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { Tag, TagList, TaggedImages } from '../../models/image/image.model';
+import { Tag, ImageData, availableTagList } from '../../models/image/image.model';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { UploadService } from '../../services/upload/upload.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-image-popup',
   standalone: true,
   imports: [
+    CommonModule,
     MatInputModule,
     MatDialogActions,
     FormsModule,
@@ -42,27 +44,33 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './image-popup.component.css'
 })
 export class ImagePopupComponent {
-  allTags = TagList;
+  allImages: ImageData[];
+  imageData: ImageData;
+  allTags = availableTagList;
   searchQuery: string = '';
   searchResults: Tag[];
   searchResultLength: number;
-  savedTags: TaggedImages[];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { imageId: number, imageUrl: string },
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { imageId: number, imageDataUrl: string },
     private dialogRef: MatDialogRef<ImageUploadComponent>,
-    private upload: UploadService,
-    private zone: NgZone) { }
-
-  get imageUrl(): string {
-    return this.data.imageUrl;
-  }
+    private uploadService: UploadService) { }
 
   ngOnInit(): void {
     this.getExistingData();
   }
 
   getExistingData() {
-    this.savedTags = JSON.parse(localStorage.getItem("tags") || '[]').filter(t => t.tagImageId === this.data.imageId)
+    this.allImages = this.uploadService.getImagesFromLocalStorage();
+    if (this.data.imageId >= 0) {
+      this.imageData = this.allImages[this.data.imageId];
+    } else {
+      this.imageData = {
+        imageId: this.allImages.length,
+        dataURL: this.data.imageDataUrl,
+        tags: []
+      };
+      this.allImages.push(this.imageData);
+    }
   }
 
   closeDialog(): void {
@@ -70,18 +78,17 @@ export class ImagePopupComponent {
   }
 
   search() {
-    this.getExistingData();
-    console.log(this.savedTags, "taggedPeople", this.searchResults, this.allTags)
-    if (this.savedTags.length == 0) {
+    console.log(this.imageData.tags, "taggedPeople", this.searchResults, this.allTags)
+    if (this.imageData.tags.length == 0) {
       this.searchResults = this.allTags.filter(item =>
         item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     } else {
       this.searchResults = this.allTags;
       this.searchQuery = null;
-      this.savedTags.forEach(tagElement => {
+      this.imageData.tags.forEach(tagElement => {
         this.searchResults = this.searchResults.filter(list =>
-          list.name != tagElement.tagName
+          list.name != tagElement.name
         )
       });
       console.log(this.searchResults);
@@ -89,16 +96,18 @@ export class ImagePopupComponent {
     this.searchResultLength = this.searchResults.length;
   }
 
-  addTag(item: Tag) {
-    let tagedImage = { tagImageId: this.data.imageId, tagName: item.name }
-    this.upload.appendToLocalStorage("tags", tagedImage);
-    this.savedTags.push(tagedImage);
+  addTag(tag: Tag) {
+    this.imageData.tags.push(tag);
     this.search();
   }
 
   removeTag(index: number) {
-    this.savedTags.splice(index, 1);
-    console.log(this.savedTags, index);
-    localStorage.setItem('tags', JSON.stringify(this.savedTags));
+    this.imageData.tags.splice(index, 1);
+    console.log(this.imageData.tags, index);
+  }
+
+  upload() {
+    this.uploadService.saveImagesToLocalStorage(this.allImages);
+    this.closeDialog();
   }
 }
